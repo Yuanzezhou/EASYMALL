@@ -1,0 +1,62 @@
+spring:
+  datasource:
+#    url: jdbc:mysql://59.110.167.53:3306/mymall_sms
+    url: jdbc:mysql://192.168.112.100:3306/mymall_sms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    hikari:
+      max-lifetime: 50000
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+    sentinel:
+      transport:
+        dashboard: localhost:8090
+        port: 8719
+  application:
+    name: mymall-seckill
+
+  rabbitmq:
+    host: 192.168.112.100
+    port: 5672
+    virtual-host: /
+
+#异步任务配置
+  task:
+    execution:
+      pool:
+        max-size: 50
+        core-size: 20
+
+  redis:
+    host: 192.168.112.100
+  session:
+    store-type: redis
+
+
+  thymeleaf:
+    cache: false
+
+
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+#  设置tableId注解为自增主键。默认是None
+  global-config:
+    db-config:
+      id-type: auto
+
+server:
+  port: 24000
+
+  #暴露的 endpoint 路径为 /actuator/sentinel
+  #Sentinel Endpoint 里暴露的信息非常有用。包括当前应用的所有规则信息、日志目录、
+  #当前实例的 IP，Sentinel Dashboard 地址，Block Page，应用与 Sentinel Dashboard 的心跳频率等等信息
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

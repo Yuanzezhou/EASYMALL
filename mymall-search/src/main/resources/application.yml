@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
+  application:
+    name: mymall-search
+
+  thymeleaf:
+    cache: false
+
+  session:
+    store-type: redis   #指定session的存储格式
+
+
+  redis:
+    host: 192.168.112.100
+    port: 6379
+
+server:
+  port: 11000
+
+

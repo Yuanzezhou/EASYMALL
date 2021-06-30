@@ -1,0 +1,40 @@
+spring:
+  datasource:
+#    url: jdbc:mysql://59.110.167.53:3306/mymall_oms
+    url: jdbc:mysql://192.168.112.100:3306/mymall_oms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: mymall-order
+  rabbitmq:
+    host: 192.168.112.100
+    port: 5672
+    virtual-host: /
+
+  session:
+    store-type: redis
+  redis:
+    host: 192.168.112.100
+    port: 6379
+
+  thymeleaf:
+    cache: false
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+#  设置tableId注解为自增主键。默认是None
+  global-config:
+    db-config:
+      id-type: auto
+server:
+  port: 9000
+
+easymall:
+  thread:
+    core: 20
+    max-size: 200
+    keep-alive-time: 10

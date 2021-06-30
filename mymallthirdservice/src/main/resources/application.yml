@@ -1,0 +1,23 @@
+server:
+  port: 20000
+
+spring:
+  application:
+    name: third-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    alicloud:
+      access-key: LTAI4FzvCL76TNUueg6hv27b
+      secret-key: 6sCJtLaYGrxlJ2E1zyGKWa4A6Nclce
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
+        bucket: mymall123
+  alicloud:
+    sms:
+      host: https://gyytz.market.alicloudapi.com
+      path: /sms/smsSend
+      appcode: ad776b1a1f2647548d2fb8c211cc9973
+      sign: 2e65b1bb3d054466b82f0c9d125465e2
+      skin: 908e94ccf08b4476ba6c876d13f084ad

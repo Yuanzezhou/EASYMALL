@@ -1,0 +1,38 @@
+spring:
+  datasource:
+#    url: jdbc:mysql://59.110.167.53:3306/mymall_wms
+    url: jdbc:mysql://192.168.112.100:3306/mymall_wms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    hikari:
+      max-lifetime: 50000
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: mymall-ware
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  rabbitmq:
+    host: 192.168.112.100
+    port: 5672
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+#  设置tableId注解为自增主键。默认是None
+  global-config:
+    db-config:
+      id-type: auto
+
+server:
+  port: 6000
+logging:
+  level:
+    com.harbin.mymall: debug

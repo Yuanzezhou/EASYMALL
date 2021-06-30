@@ -1,0 +1,18 @@
+server:
+  port: 15000
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  thymeleaf:
+    cache: false
+  application:
+    name: mymall-auth-server
+
+  redis:
+    host: 192.168.112.100
+    port: 6379
+
+  session:
+    store-type: redis

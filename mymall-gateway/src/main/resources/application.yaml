@@ -1,0 +1,108 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+    gateway:
+      routes:
+#        - id: baidu_route
+#          uri: https://www.baidu.com
+#          predicates:
+#            - Query=url,baidu
+#
+#        - id: qq_route
+#          uri: https://www.qq.com
+#          predicates:
+#            - Query=url,qq
+
+#注意：路由的顺序有规定：精确的要放前面。
+        - id: product_route
+          uri: lb://mymall-product  #lb：负载均衡
+          predicates:
+          - Path=/api/mymallproduct/**
+          filters:
+          - RewritePath=/api/(?<segment>/?.*), /$\{segment}
+
+        - id: thirdservice_route
+          uri: lb://third-service   #lb：负载均衡   #这里是nacos中服务注册的名字
+          predicates:
+            - Path=/api/thirdservice/**
+          filters:
+            - RewritePath=/api/thirdservice(?<segment>/?.*), /$\{segment}
+
+        - id: member_route
+          uri: lb://mymall-member  #lb：负载均衡
+          predicates:
+            - Path=/api/mymallmember/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment}
+
+        - id: ware_route
+          uri: lb://mymall-ware  #lb：负载均衡
+          predicates:
+            - Path=/api/mymallware/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment}
+
+        - id: coupon_route
+          uri: lb://mymall-coupon  #lb：负载均衡
+          predicates:
+            - Path=/api/mymallcoupon/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment}
+
+        - id: admin_route
+          uri: lb://renren-fast   #lb：负载均衡
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api(?<segment>/?.*), /renren-fast/$\{segment}
+
+        - id: easymall_host
+          uri: lb://mymall-product   #lb：负载均衡
+          predicates:
+            - Host=easymall.com,item.easymall.com
+
+        - id: easymall_search_host
+          uri: lb://mymall-search   #lb：负载均衡
+          predicates:
+            - Host=search.easymall.com
+
+        - id: easymall_auth-server
+          uri: lb://mymall-auth-server   #lb：负载均衡
+          predicates:
+            - Host=auth.easymall.com
+
+        - id: easymall_cart
+          uri: lb://mymall-cart   #lb：负载均衡
+          predicates:
+            - Host=cart.easymall.com
+
+        - id: easymall_order
+          uri: lb://mymall-order   #lb：负载均衡
+          predicates:
+            - Host=order.easymall.com
+
+        - id: easymall_seckill
+          uri: lb://mymall-seckill   #lb：负载均衡
+          predicates:
+            - Host=seckill.easymall.com
+
+        - id: easymall_member
+          uri: lb://mymall-member   #lb：负载均衡
+          predicates:
+            - Host=member.easymall.com
+
+
+#api前缀（前端项目）都发送到这个路由.
+#http://localhost:88/api/captcha.jpg  ==>网关转到    http://renren-fast:8080/api/captcha.jpg  (解决了登录时的问题)
+
+#http://localhost:88/（api/mymallproduct/category/list/tree ）  ==>网关转到    http://localhost:5000/ （mymallproduct/category/list/tree ）
+# （api/mymallproduct/category/list/tree ）   ====》  （mymallproduct/category/list/tree ）  去掉前缀api。
+  application:
+    name: mymall-gateway
+
+server:
+  port: 88
+

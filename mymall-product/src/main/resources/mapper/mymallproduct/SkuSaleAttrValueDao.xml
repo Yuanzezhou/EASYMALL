@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.harbin.mymall.mymallproduct.dao.SkuSaleAttrValueDao">
+
+    <resultMap id="skuItemSaleAttrVo" type="com.harbin.mymall.mymallproduct.vo.SkuItemSaleAttrVo">
+        <result property="attrId" column="attr_id"/>
+        <result property="attrName" column="attr_name"/>
+        <collection property="attrValues" ofType="com.harbin.mymall.mymallproduct.vo.AttrValueWithSkuIdVo">
+            <result property="attrValue" column="attr_value"/>
+            <result property="skuIds" column="sku_ids"/>
+        </collection>
+    </resultMap>
+
+    <select id="getSaleAttrsBySpuId" resultMap="skuItemSaleAttrVo">
+        SELECT  ssav.attr_id attr_id, ssav.attr_name attr_name, ssav.attr_value attr_value, GROUP_CONCAT(DISTINCT info.sku_id) sku_ids FROM pms_sku_info info
+        LEFT JOIN pms_sku_sale_attr_value ssav ON ssav.sku_id = info.sku_id
+        WHERE info.spu_id = #{spuId}
+        GROUP BY ssav.attr_id,ssav.attr_name, ssav.attr_value
+    </select>
+
+    <select id="getSkuSaleAttrValuesAsStringList" resultType="java.lang.String">
+        select CONCAT(attr_name,":",attr_value) from pms_sku_sale_attr_value
+        where sku_id = #{skuId}
+    </select>
+</mapper>
